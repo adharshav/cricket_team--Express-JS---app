@@ -26,6 +26,15 @@ const initializeDbAndServer = async () => {
 }
 initializeDbAndServer()
 
+const ans = playersList => {
+    return {
+      playerId: playersList.player_id,
+      playerName: playersList.player_name,
+      jerseyNumber: playersList.jersey_number,
+      role: playersList.role,
+    }
+  }
+
 //Get Players API
 app.get('/players/', async (request, response) => {
   const getplayersQuery = `
@@ -34,15 +43,6 @@ app.get('/players/', async (request, response) => {
   cricket_team 
   ORDER BY
   player_id`
-
-  const ans = playersList => {
-    return {
-      playerId: playersList.player_id,
-      playerName: playersList.player_name,
-      jerseyNumber: playersList.jersey_number,
-      role: playersList.role,
-    }
-  }
 
   const playersList = await db.all(getplayersQuery)
   response.send(playersList.map(eachPlayer => ans(eachPlayer)))
@@ -106,6 +106,8 @@ app.delete('/players/:playerId/', async (request, response) => {
   cricket_team 
   WHERE
   player_id = ${playerId}`
+
+  module.exports = app
 
   await db.run(deletePlayersQuery)
   response.send('Player Removed')
