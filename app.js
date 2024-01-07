@@ -77,7 +77,7 @@ app.get('/players/:playerId', async (request, response) => {
   player_id = ${playerId}`
 
   const getPlayerIdDetails = await db.get(getPlayerIdQuery)
-  response.send(getPlayerIdDetails)
+  response.send(ans(getPlayerIdDetails))
 })
 
 //Update Players API
