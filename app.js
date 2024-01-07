@@ -107,8 +107,8 @@ app.delete('/players/:playerId/', async (request, response) => {
   WHERE
   player_id = ${playerId}`
 
-  module.exports = app
-
   await db.run(deletePlayersQuery)
   response.send('Player Removed')
 })
+
+module.exports = app
